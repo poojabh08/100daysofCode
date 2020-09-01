@@ -12,55 +12,34 @@ int main()
         cin>>e;
         v.push_back(e);
     }
-    vector<int> x;
-    vector<int> y;
-    int xor1=0;
-    for(int i=0;i<n;i++)
+    int *x;
+    int *y;
+    int xor1=v[0];
+    for(int i=1;i<n;i++)
         xor1^=v[i];
     for(int i=1;i<=n;i++)
         xor1^=i;
+    int set_bit_no = xor1 & ~(xor1 - 1); 
     for(int i=0;i<n;i++)
     {
-        if(v[i]<<1==1)
-            x.push_back(v[i]);
+        if(v[i] & set_bit_no)
+            *x^=v[i];
         else
         {
-            y.push_back(v[i]);
+            *y^=v[i];
         }
-        if(i<<1==1)
-            x.push_back(i);
+    }
+    for(int i=1;i<=n;i++){
+        if(i& set_bit_no)
+            *x^=i;
         else
         {
-            y.push_back(i);
+           * y^=i;
         }
     }
-    int a=0,b=0,f=0;
-    for(int i=0;i<x.size();i++)
-        a^=x[i];
-    for(int i=0;i<y.size();i++)
-        b^=y[i];
-    for(int i=0;i<n;i++)
-    {
-        if(a==v[i]){
-            cout<<"Repeating number: "<<v[i];
-            f=1;
-            break;
-        }
-        if(b==v[i])
-        {
-            cout<<"Repeating number: "<<v[i];
-            break;
-        }
-    }
-    if(f==0)
-    {
-        cout<<"\nMissing number: "<<a;
-    }
-    else
-    {
-        cout<<"\nMissing number: "<<b;
-    }
-    return 0;
+    cout<<"Missing "<<*x;
+    cout<<"\nRepeating "<<*y;
+    
 }
 
-// Need to be reviewed.
+// Need to be reviewed.   Still working on it
